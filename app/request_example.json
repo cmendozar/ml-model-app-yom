@@ -1,0 +1,39 @@
+{
+    "data": {
+      "popularity": 68,
+      "danceability": 0.826,
+      "energy": 0.704,
+      "key": 9,
+      "loudness": -7.527,
+      "mode": 1,
+      "speechiness": 0.117,
+      "acousticness": 0.189,
+      "instrumentalness": 4.8e-05,
+      "liveness": 0.0617,
+      "valence": 0.741,
+      "tempo": 94.013,
+      "duration": 205000,
+      "id_new": 1
+    }
+  }
+  {
+    "data": {
+      "popularity": 60,
+      "danceability": 0.607,
+      "energy": 0.875,
+      "key": 0,
+      "loudness": -4.434,
+      "mode": 1,
+      "speechiness": 0.0605,
+      "acousticness": 0.00114,
+      "instrumentalness": 0.00765,
+      "liveness": 0.467,
+      "valence": 0.457,
+      "tempo": 131.058,
+      "duration": 264520,
+      "time_signature": 4,
+      "id_new": 2301
+    }
+  }
+  
+  

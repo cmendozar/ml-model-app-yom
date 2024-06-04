@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import pickle
 from sklearn.preprocessing import MinMaxScaler
 
 
@@ -62,11 +63,13 @@ class Preprocessing():
         return df
 
     def scale(self, df, cols=[]):
-        scaler = MinMaxScaler()
         for col in cols:
             if col in df.columns:
+                scaler = MinMaxScaler()
                 df.loc[:, f'{col}_scale'] = scaler.fit_transform(df[[col]])
                 df = self.delete_columns(df, [col])
+                with open(f'model/scalers/{col}.pkl', 'wb') as scaler_file:
+                    pickle.dump(scaler, scaler_file)
         return df
 
     def make_feat_label_data(self, df):
