@@ -30,10 +30,8 @@ class AppPreprocessing(Preprocessing):
 
     def check_and_reorder_columns(self, df):
         if not all(col in df.columns for col in EXPECTED_COLUMNS):
-            import pdb
-            pdb.set_trace()
             raise ValueError(
-                "The DataFrame get by the Json Request does not "
+                "The DataFrame got by the Json Request does not "
                 "contain all the required columns."
             )
         return df[EXPECTED_COLUMNS]
