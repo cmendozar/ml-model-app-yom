@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from flask import Flask, request, jsonify
@@ -32,3 +33,7 @@ def predict_songs():
     # TODO: Make a method to process many data songs
     # Could be a use case with these particularity
     return jsonify({'prediction': {'Song1': '1.0', 'Song2': '0.0'}})
+
+
+# port = int(os.environ.get("PORT", 8000))
+# app.run(host='0.0.0.0', port=port)
