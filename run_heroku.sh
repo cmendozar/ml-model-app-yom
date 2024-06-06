@@ -1,3 +1,4 @@
+# heroku login
 # heroku ps:scale web=0 -a yom-ml-ap
 # heroku apps:destroy -a yom-ml-app
 # heroku create yom-ml-app
