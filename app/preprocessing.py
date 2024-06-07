@@ -19,6 +19,13 @@ class AppPreprocessing(Preprocessing):
         df = self.check_and_reorder_columns(df)
         return df
 
+    def transform_test_df(self, df):
+        df = self.delete_columns(df, columns=COLS_TO_DELETE)
+        df = self.scale(df, COLS_TO_SCALE)
+        df = self.format(df)
+        df = self.check_and_reorder_columns(df)
+        return df
+
     def scale(self, df, cols=[]):
         for col in cols:
             if col in df.columns:

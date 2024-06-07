@@ -1,8 +1,7 @@
-import os
 import pickle
-
 from flask import Flask, request, jsonify
 from app.preprocessing import AppPreprocessing
+from utils.mongo_handler import MongoHandler
 
 app = Flask(__name__)
 
@@ -16,6 +15,7 @@ with open('model.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 preprocessor = AppPreprocessing(None, None, None)
+mongo_handler = MongoHandler("URI_YOM_MONGO", "yom", "ml-app")
 
 
 @app.route('/predict-song', methods=['POST'])
@@ -23,6 +23,11 @@ def predict():
     try:
         X = preprocessor.transform_request_to_df(request)
         prediction = model.predict(X)
+        try:
+            mongo_handler.save_request_data(request.get_json(), prediction)
+        except:
+            # TODO: MANAGE BETTER THESE CASES.
+            print("Request has not been saved into MongoDB.")
         return jsonify({'prediction': prediction.tolist()})
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
