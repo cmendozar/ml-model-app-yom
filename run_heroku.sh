@@ -10,3 +10,4 @@ git checkout main
 git pull
 git push heroku main
 heroku logs --tail -a yom-ml-app
+heroku open
