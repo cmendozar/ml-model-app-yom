@@ -75,7 +75,6 @@ class Preprocessing():
     def make_feat_label_data(self, df):
         X = df.loc[:, df.columns != 'class']
         y = df['class'].to_numpy()
-        print(df.head())
         return X, y
 
     def make_testing_data(self, df):

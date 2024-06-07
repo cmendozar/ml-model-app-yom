@@ -8,6 +8,18 @@
 import pickle
 from imblearn.over_sampling import SMOTE
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split
+
+PARAMETERS = {
+    "random_state": 0,
+    "subsample": 0.8,
+    "n_estimators": 300,
+    # presort: True,
+    "warm_start": True,
+    "max_features": None,
+    "min_samples_split": 106,
+    "min_samples_leaf": 177,
+}
 
 
 class Training:
@@ -15,22 +27,22 @@ class Training:
         self.X = X
         self.y = y
 
+    def split_data(self):
+        self.X_train, self.X_test, self.y_train, self.y_test = \
+            train_test_split(self.X, self.y, random_state=0, test_size=0.3)
+
     def balance_data(self):
         sm = SMOTE(random_state=0)
-        self.X_res, self.y_res = sm.fit_resample(self.X, self.y)
+        self.split_data()
+        self.X_res, self.y_res = sm.fit_resample(self.X_train, self.y_train)
         return self.X_res, self.y_res
 
+    def set_parameters(self, parameters):
+        self.parameters = parameters
+
     def traning_model(self):
-        classifer_GB = GradientBoostingClassifier(
-            random_state=0,
-            subsample=0.8,
-            n_estimators=300,
-            # presort=True,
-            warm_start=True,
-            max_features=None,
-            min_samples_split=106,
-            min_samples_leaf=177,
-        )
+        self.set_parameters(PARAMETERS)
+        classifer_GB = GradientBoostingClassifier(**self.parameters)
         self.balance_data()
         self.model = classifer_GB.fit(self.X_res, self.y_res)
         return self.model
