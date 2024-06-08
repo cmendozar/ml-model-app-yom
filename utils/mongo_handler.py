@@ -9,12 +9,7 @@ class MongoHandler:
         self.uri = os.environ.get(uri_env_var)
         if not self.uri:
             raise ValueError(f"Environment variable '{uri_env_var}' not found")
-        self.client = MongoClient(
-            self.uri,
-            server_api=ServerApi('1'),
-            tls=True,
-            tlsAllowInvalidCertificates=True
-        )
+        self.client = MongoClient(self.uri, server_api=ServerApi('1'))
         self.db = self.client[db_name]
         self.col = self.db[col_name]
         self._check_connection()
