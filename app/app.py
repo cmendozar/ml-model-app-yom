@@ -53,9 +53,11 @@ monitoring_instance = Monitoring("URI_YOM_MONGO", "yom", "ml-app", "data/t1/")
 @scheduler.scheduled_job(CronTrigger(hour=0, minute=0))
 def scheduled_monitoring():
     monitoring_instance.run_monitoring()
-    # TODO: ADD LOGIC TO DETECT WHEN PVALUE OF k2 is less than 0.05
+    # TODO: ADD LOGIC TO DETECT WHEN PVALUE OF K2 IS LESS THAN 0.05
     # SO WE CAN SEND AN ALERT WITH EMAIL (EASY TO DO)!
     # HERE THE DATA IS ALREADY SENDED TO NEPTUNE SO WE STILL CAN SEE DATA THERE
+    # HERE IF P-VALUE IS LESS THAN 0.05 WE SHOULD TRIGGER TRAINING PIPILINE
+    # THE CLASS AND METHOD IS ALREADY CREATED IN model/__main__.py
 
 
 scheduler.start()

@@ -1,8 +1,5 @@
-# DUE WE DONT KNOW IF THE PREDICCITION ARE RIGHT
-# WE WILL MONITORING DATA DERIVATE AND CONCEPT/MODEL DERIVATE
-
-import pandas as pd
 from datetime import datetime, timedelta
+import pandas as pd
 from scipy.stats import ks_2samp
 
 from model.preprocessing import Preprocessing
@@ -13,7 +10,8 @@ COLS_TO_COMPARE = [
     "popularity", "danceability", "energy", "key",
     "loudness", "mode", "speechiness", "acousticness",
     "instrumentalness", "liveness", "valence",
-    "tempo", "duration"# , "class"
+    "tempo", "duration"
+    # ,"class" TODO: Manage the model degradation
 ]
 
 
@@ -82,11 +80,9 @@ class Monitoring:
         df_mongo = self.get_mongo_data()
         df_train = df_train.dropna(subset=COLS_TO_COMPARE)
         neptune_monitoring = NepMonitoring()
-        neptune_monitoring.start_run()
         comparison_results = self.compare_distributions(df_train, df_mongo, COLS_TO_COMPARE)
-        neptune_monitoring.log_results_to_neptune(comparison_results)  # Log results to Neptune
-        neptune_monitoring.stop_run()
-        print("Monitoring excuted")
+        neptune_monitoring.log_results_to_neptune(comparison_results, datetime.now().strftime("%Y-%m-%d"))
+        print("Monitoring executed")
 
 
 if __name__ == '__main__':
@@ -96,19 +92,4 @@ if __name__ == '__main__':
     mongo_collection = 'ml-app'
 
     monitoring = Monitoring(mongo_uri, mongo_db, mongo_collection, data_path)
-
-    df_train = monitoring.load_data()
-    df_mongo = monitoring.get_mongo_data()
-
-    # Drop the rows with missing values in df_train
-    df_train = df_train.dropna(subset=COLS_TO_COMPARE)
-
-    neptune_monitoring = NepMonitoring()  # Initialize Neptune monitoring
-    neptune_monitoring.start_run()  # Start Neptune run
-
-    comparison_results = monitoring.compare_distributions(df_train, df_mongo, COLS_TO_COMPARE)
-    neptune_monitoring.log_results_to_neptune(comparison_results)  # Log results to Neptune
-
-    neptune_monitoring.stop_run()  # Stop Neptune run
-
-    print(comparison_results)
+    monitoring.run_monitoring()
