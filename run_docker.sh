@@ -7,6 +7,12 @@ PORT=8000
 # Set BUILD to true or false as needed
 BUILD=true
 
+# Variables de ambiente
+export NEPTUNE_API_TOKEN="YOUR_NEP_API_TOKEN"
+export NEPTUNE_PROJECT="YOUR_NEP_PROJECT"
+export URI_YOM_MONGO="YOUR_URI_MONGO"
+export NEPTUNE_MODEL_ID="YOUR_NEP_MODEL_ID"
+
 # Check if there is a container using the specified port and stop/remove it
 EXISTING_CONTAINER_ID=$(docker ps -q --filter "publish=$PORT")
 
