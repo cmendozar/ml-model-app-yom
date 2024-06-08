@@ -50,14 +50,7 @@ scheduler = BackgroundScheduler()
 
 monitoring_instance = Monitoring("URI_YOM_MONGO", "yom", "ml-app", "data/t1/")
 
-
-@scheduler.scheduled_job(IntervalTrigger(seconds=10))
-def cron_job():
-    print("hola soy el cron")
-
-
-# @scheduler.scheduled_job(CronTrigger(hour=0, minute=0))
-@scheduler.scheduled_job(IntervalTrigger(seconds=10))
+@scheduler.scheduled_job(CronTrigger(hour=0, minute=0))
 def scheduled_monitoring():
     monitoring_instance.run_monitoring()
     # TODO: ADD LOGIC TO DETECT WHEN PVALUE OF k2 is less than 0.05
@@ -69,7 +62,6 @@ scheduler.start()
 
 # STOP SCHEDULLER WHEN APP IS SHUTDOWN
 atexit.register(lambda: scheduler.shutdown())
-signal.signal(signal.SIGTERM, lambda: scheduler.shutdown())
 signal.signal(signal.SIGINT, lambda: scheduler.shutdown())
 
 # port = int(os.environ.get("PORT", 8000))
