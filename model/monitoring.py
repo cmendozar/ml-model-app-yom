@@ -77,6 +77,17 @@ class Monitoring:
         df_train = prepross.merge_dfs()
         return df_train
 
+    def run_monitoring(self):
+        df_train = self.load_data()
+        df_mongo = self.get_mongo_data()
+        df_train = df_train.dropna(subset=COLS_TO_COMPARE)
+        neptune_monitoring = NepMonitoring()
+        neptune_monitoring.start_run()
+        comparison_results = self.compare_distributions(df_train, df_mongo, COLS_TO_COMPARE)
+        neptune_monitoring.log_results_to_neptune(comparison_results)  # Log results to Neptune
+        neptune_monitoring.stop_run()
+        print("Monitoring excuted")
+
 
 if __name__ == '__main__':
     data_path = 'data/t1/'
