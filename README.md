@@ -82,7 +82,7 @@ hacerlo reproducible fácilmente para alguien que quiera ejecutarlo.
 6. MongoDB: Se dejo en utils y se trabajó en una clase que permite en el manejo de esta para ir guardando los datos de las requests/predicciones que se les hace al modelo.
 
 Interacción con el mundo real.
-´´´
+```sh
 Aquí lo ideal es dejar el modelo funcionando en algún que se pueda ir consumiento puede ser de forma remota o en la misma maquina que se utilice.
 De forma remota se abarca en este caso en donde se levantó un microservicio/api que permite mediante peticiones ir realizando las predicciones.
 Para Spotify puede ser de utilizada al momento de que un artista suba una canción clasificarla de manera automatica (mediante el modelo) si es reggeaton o no.
@@ -93,7 +93,7 @@ que maneje la entrada de una petición con muchas canciones a predecir teniendo 
 En otros casos, como un modelo de recomendación por ejemplo dentro de un ecommerce sería bueno levantar un servicio que pueda permitir dado los datos
 realizar una predicciones de producto(s) a recomendar. Una recomendación es definir que acción es la que sirve para ir validando las predicciones.
 Por ejemplo si se compró o añadió el producto al carrito ir a rescatar esa información con el objetivo de tener un mejor monitoreo del modelo.
-´´´
+```
 
 
 
