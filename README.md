@@ -82,7 +82,6 @@ hacerlo reproducible fácilmente para alguien que quiera ejecutarlo.
 6. MongoDB: Se dejo en utils y se trabajó en una clase que permite en el manejo de esta para ir guardando los datos de las requests/predicciones que se les hace al modelo.
 
 Interacción con el mundo real.
-```sh
 Aquí lo ideal es dejar el modelo funcionando en algún que se pueda ir consumiento puede ser de forma remota o en la misma maquina que se utilice.
 De forma remota se abarca en este caso en donde se levantó un microservicio/api que permite mediante peticiones ir realizando las predicciones.
 Para Spotify puede ser de utilizada al momento de que un artista suba una canción clasificarla de manera automatica (mediante el modelo) si es reggeaton o no.
@@ -93,8 +92,22 @@ que maneje la entrada de una petición con muchas canciones a predecir teniendo 
 En otros casos, como un modelo de recomendación por ejemplo dentro de un ecommerce sería bueno levantar un servicio que pueda permitir dado los datos
 realizar una predicciones de producto(s) a recomendar. Una recomendación es definir que acción es la que sirve para ir validando las predicciones.
 Por ejemplo si se compró o añadió el producto al carrito ir a rescatar esa información con el objetivo de tener un mejor monitoreo del modelo.
-```
 
+
+Prevenir la degradación del modelo:
+
+1. Establecer un pipeline de despliegue automatizada de monitoreo continuo
+-Monitoreo del desempeño del modelo según métricas de calidad como precisión, recall, F1-score. Realizado en el archivo montiroring.py. Se cargaron estos datos en Neptune.ai
+-Alertas automáticas cuando se detecte métricas bajo un nivel esperado. En el modulo app se dejo un cron que permite realizar esta alerta. Se puede gatillar con un log/print/email. 
+2. Implementación de sistema de registro de datos para capturar cambios en la distribución de datos de entrada y salida y comparar con datos de entrenamiento
+- Comparación de distribuciones con Kolmogorov-Smirnov. Permite detectar diferencias entre series. valor p<0.045 gatillar alerta (Quedó programado en model.monitoring).
+- Diferencia entre las distribuciones de datos de entrada -> deriva de datos (Quedó progamado en el model.monitoring) Se dejó además los datos en neptune.ai para hacer seguimiento. 
+- Diferencia entre las distribuciones de datos de salida -> deriva de concepto
+3. Reentrenamiento y actualización del modelo
+- Pipeline automatizado de recolección de datos nuevos, ajuste de los parámetros del modelo, reentrenamiento y validación. Se dejó un mongoDb que va almacenando la información de nuevos datos de las request con sus predicciones. 
+- Actualización del modelo: Se dejó en el Pipeline del modulo modelo y en el modulo Mlops con neptune.ai. 
+4. Exploración de modelos alternativos
+- Proceso continuo de creación y evaluación de nuevos modelos y técnicas que puedan mejorar el desempeño en producción.
 
 
 
