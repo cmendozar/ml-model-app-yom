@@ -1,4 +1,4 @@
-# ML MODEL YOM ML OPS DEPLOY HEROKU DOCKER
+# ML MODEL ML OPS DEPLOY HEROKU DOCKER
 
 Este proyecto tiene como por objetivo dejar un modelo hecho en local por DS y dejarlo en un ambiente simulado de producción.
 
